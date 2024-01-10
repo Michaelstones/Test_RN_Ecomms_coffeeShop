@@ -1,0 +1,87 @@
+# macOS
+
+#####################
+\*\*/.DS_Store
+
+# Xcode
+
+#####################
+build/
+_.pbxuser
+!default.pbxuser
+_.mode1v3
+!default.mode1v3
+_.mode2v3
+!default.mode2v3
+_.perspectivev3
+!default.perspectivev3
+xcuserdata
+_.xccheckout
+_.moved-aside
+DerivedData
+_.hmap
+_.ipa
+\*.xcuserstate
+ios/.xcode.env.local
+
+# Android/IntelliJ
+
+#####################
+**/build/
+**/.idea
+**/.gradle
+**/local.properties
+**/\*.iml
+**/_.hprof
+\*\*/.cxx/
+_.keystore
+\*\*/!debug.keystore
+
+# Node.js
+
+#####################
+
+# Ignore node_modules and .env files anywhere in the project
+
+**/node_modules/
+**/.env
+**/npm-debug.log
+**/yarn-error.log
+
+# Fastlane
+
+#####################
+
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+
+# screenshots whenever they are needed.
+
+# For more information about the recommended setup visit:
+
+# https://docs.fastlane.tools/best-practices/source-control/
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Bundle artifact
+
+#####################
+\*.jsbundle
+
+# Ruby / CocoaPods
+
+#####################
+/ios/Pods/
+/vendor/bundle/
+
+# Temporary files created by Metro to check the health of the file watcher
+
+#####################
+.metro-health-check\*
+
+# Testing
+
+#####################
+/coverage
