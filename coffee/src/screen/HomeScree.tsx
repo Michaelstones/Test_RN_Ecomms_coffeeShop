@@ -17,6 +17,7 @@ import {useStore} from '../store/store';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import HeaderBar from '../component/HeaderBar';
 import CustomIconConfig from '../component/CustomIconConfig';
+import BeansData from '../data/BeansData';
 import CoffeCard from '../component/CoffeCard';
 import {useQuery} from '@apollo/client';
 import {GET_ALL_PRODUCTS} from '../lib/queries';
@@ -50,6 +51,7 @@ const HomeScree = ({navigation}: {navigation: any}) => {
     coffee: [] as CoffeeType[],
     bean: [] as CoffeeType[],
   });
+  const bean = useStore((state: any) => state?.beansList);
   const addToCart = useStore((state: any) => state?.addToCart);
   const calcCartPrice = useStore((state: any) => state?.calcCartPrice);
   const [categories, setCategories] = useState(getItemCatFromData(prodList?.coffee));
@@ -216,7 +218,7 @@ const HomeScree = ({navigation}: {navigation: any}) => {
           onEndReached={async () => {
             const datsss = await fetchMore({
               variables: {
-                skip: prodList?.coffee?.length, // Pass the current length of the list as the new skip value
+                skip: 6, // Pass the current length of the list as the new skip value
               },
             });
             const prods = datsss.data.getAllProducts;
@@ -226,7 +228,7 @@ const HomeScree = ({navigation}: {navigation: any}) => {
               bean: [...prevState.bean, ...sortedd?.bean],
             }));
             setCategories(getItemCatFromData([...prodList?.coffee, ...sortedd?.coffee]));
-            setSortedlist(getList(categoryIndex.category, [...prodList?.coffee, ...sortedd?.coffee]));
+            setSortedlist(getList(sortedd.coffee.length, [...prodList?.coffee, ...sortedd?.coffee]));
             updateProd(sortedd);
           }}
           onEndReachedThreshold={0.1}
@@ -268,7 +270,7 @@ const HomeScree = ({navigation}: {navigation: any}) => {
             </View>
           }
           showsHorizontalScrollIndicator={false}
-          data={prodList?.bean}
+          data={BeansData}
           keyExtractor={item => uniqueKey({prefix: 'beans', item: item})}
           renderItem={({item}) => {
             return (

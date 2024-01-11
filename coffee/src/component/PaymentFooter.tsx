@@ -15,14 +15,12 @@ interface IPaymentFooter {
 }
 
 const PaymentFooter = ({price, buttonPressHandler, buttonTitle}: IPaymentFooter) => {
-  const {price: pr, currency} = price;
-
   return (
     <View style={styles.PriceFooter}>
       <View style={styles.PriceContainer}>
         <Text style={styles.PriceTitle}>Price</Text>
         <Text style={styles.PriceText}>
-          {currency} <Text style={styles.Price}>{pr}</Text>
+          {price?.currency} <Text style={styles.Price}>{price?.price}</Text>
         </Text>
       </View>
       <TouchableOpacity style={styles.PayButton} onPress={() => buttonPressHandler()}>

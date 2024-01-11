@@ -2,7 +2,7 @@
 // eslint-disable-next-line react-native/no-inline-styles
 
 import React from 'react';
-import {Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Dimensions, ImageBackground, ImageProps, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import CustomIconConfig from './CustomIconConfig';
@@ -35,21 +35,32 @@ const CoffeeCard = ({
   price,
   buttonPressHandler,
 }: CoffeeCardProps) => {
+  // console.log(type);
+
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
       style={styles.CardLinearGradientContainer}
       colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
-      <ImageBackground
-        source={{uri: `http://localhost:3000/images/${imagelink_square}`}}
-        style={styles.CardImageBG}
-        resizeMode="cover">
-        <View style={styles.CardRatingContainer}>
-          <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_16} />
-          <Text style={styles.CardRatingText}>{average_rating}</Text>
-        </View>
-      </ImageBackground>
+      {type === 'Bean' ? (
+        <ImageBackground source={imagelink_square as ImageProps} style={styles.CardImageBG} resizeMode="cover">
+          <View style={styles.CardRatingContainer}>
+            <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_16} />
+            <Text style={styles.CardRatingText}>{average_rating}</Text>
+          </View>
+        </ImageBackground>
+      ) : (
+        <ImageBackground
+          source={{uri: `http://localhost:3000/images/${imagelink_square}`}}
+          style={styles.CardImageBG}
+          resizeMode="cover">
+          <View style={styles.CardRatingContainer}>
+            <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_16} />
+            <Text style={styles.CardRatingText}>{average_rating}</Text>
+          </View>
+        </ImageBackground>
+      )}
       <Text style={styles.CardTitle}>{name}</Text>
       <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
       <View style={[styles.CardFooterRow]}>

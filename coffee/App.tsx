@@ -50,7 +50,7 @@ const App = () => {
     };
 
     checkLoggedInUser();
-  }, []);
+  }, [updateUser, user]);
 
   return (
     <NavigationContainer ref={navigationRef}>

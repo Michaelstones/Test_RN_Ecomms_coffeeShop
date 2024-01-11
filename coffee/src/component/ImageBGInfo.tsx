@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, ImageProps, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import CustomIconConfig from './CustomIconConfig';
@@ -7,7 +7,7 @@ import GradientIcon from './GradientIcon';
 
 interface IImgBGInfoProps {
   EnableBackHandler: boolean;
-  imagelink_portrait: string;
+  imagelink_portrait: string | ImageProps;
   type: string;
   id: string;
   favourite: boolean;
@@ -39,88 +39,173 @@ const ImageBGInfo = ({
   // console.log(imagelink_portrait);
   return (
     <View>
-      <ImageBackground source={{uri: `http://localhost:3000/images/${imagelink_portrait}`}} style={styles.ItemBGI}>
-        {EnableBackHandler ? (
-          <View style={styles.ImgHeaderBarContainerWithBack}>
-            <TouchableOpacity
-              onPress={() => {
-                BackHandler();
-              }}>
-              <GradientIcon name="left" color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                ToggleFavourite(favourite, type, id);
-              }}>
-              <GradientIcon
-                name="like"
-                color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
-                size={FONTSIZE.size_16}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.ImgHeaderBarContainerWithoutBack}>
-            <TouchableOpacity
-              onPress={() => {
-                ToggleFavourite(favourite, type, id);
-              }}>
-              <GradientIcon
-                name="like"
-                color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
-                size={FONTSIZE.size_16}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+      {type === 'Bean' ? (
+        <ImageBackground source={imagelink_portrait as ImageProps} style={styles.ItemBGI}>
+          {EnableBackHandler ? (
+            <View style={styles.ImgHeaderBarContainerWithBack}>
+              <TouchableOpacity
+                onPress={() => {
+                  BackHandler();
+                }}>
+                <GradientIcon name="left" color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  ToggleFavourite(favourite, type, id);
+                }}>
+                <GradientIcon
+                  name="like"
+                  color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
+                  size={FONTSIZE.size_16}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.ImgHeaderBarContainerWithoutBack}>
+              <TouchableOpacity
+                onPress={() => {
+                  ToggleFavourite(favourite, type, id);
+                }}>
+                <GradientIcon
+                  name="like"
+                  color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
+                  size={FONTSIZE.size_16}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
 
-        <View style={styles.ImgInfoOuterContainer}>
-          <View style={styles.ImgInfoInnerContainer}>
-            <View style={styles.InfoContainerRow}>
-              <View>
-                <Text style={styles.ItemTitleText}>{name}</Text>
-                <Text style={styles.ItemSubtitleText}>{special_ingredient}</Text>
-              </View>
-              <View style={styles.ItemPropertiesContainer}>
-                <View style={styles.PropFirst}>
-                  <CustomIconConfig
-                    name={type == 'Bean' ? 'bean' : 'beans'}
-                    size={type == 'Bean' ? FONTSIZE.size_18 : FONTSIZE.size_24}
-                    color={COLORS.primaryOrangeHex}
-                  />
-                  <Text
-                    style={[
-                      styles.PropTextFirst,
-                      {
-                        marginTop: type == 'Bean' ? SPACING.space_4 + SPACING.space_2 : 0,
-                      },
-                    ]}>
-                    {type}
-                  </Text>
+          <View style={styles.ImgInfoOuterContainer}>
+            <View style={styles.ImgInfoInnerContainer}>
+              <View style={styles.InfoContainerRow}>
+                <View>
+                  <Text style={styles.ItemTitleText}>{name}</Text>
+                  <Text style={styles.ItemSubtitleText}>{special_ingredient}</Text>
                 </View>
-                <View style={styles.PropFirst}>
-                  <CustomIconConfig
-                    name={type == 'Bean' ? 'location' : 'drop'}
-                    size={FONTSIZE.size_16}
-                    color={COLORS.primaryOrangeHex}
-                  />
-                  <Text style={styles.PropTextLast}>{ingredients}</Text>
+                <View style={styles.ItemPropertiesContainer}>
+                  <View style={styles.PropFirst}>
+                    <CustomIconConfig
+                      name={type === 'Bean' ? 'bean' : 'beans'}
+                      size={type === 'Bean' ? FONTSIZE.size_18 : FONTSIZE.size_24}
+                      color={COLORS.primaryOrangeHex}
+                    />
+                    <Text
+                      style={[
+                        styles.PropTextFirst,
+                        {
+                          marginTop: type == 'Bean' ? SPACING.space_4 + SPACING.space_2 : 0,
+                        },
+                      ]}>
+                      {type}
+                    </Text>
+                  </View>
+                  <View style={styles.PropFirst}>
+                    <CustomIconConfig
+                      name={type === 'Bean' ? 'location' : 'drop'}
+                      size={FONTSIZE.size_16}
+                      color={COLORS.primaryOrangeHex}
+                    />
+                    <Text style={styles.PropTextLast}>{ingredients}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={styles.InfoContainerRow}>
-              <View style={styles.RatingContainer}>
-                <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_20} />
-                <Text style={styles.RatingText}>{average_rating}</Text>
-                <Text style={styles.RatingCountText}>({ratings_count})</Text>
-              </View>
-              <View style={styles.RoastedContainer}>
-                <Text style={styles.RoastedText}>{roasted}</Text>
+              <View style={styles.InfoContainerRow}>
+                <View style={styles.RatingContainer}>
+                  <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_20} />
+                  <Text style={styles.RatingText}>{average_rating}</Text>
+                  <Text style={styles.RatingCountText}>({ratings_count})</Text>
+                </View>
+                <View style={styles.RoastedContainer}>
+                  <Text style={styles.RoastedText}>{roasted}</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      ) : (
+        <ImageBackground source={{uri: `http://localhost:3000/images/${imagelink_portrait}`}} style={styles.ItemBGI}>
+          {EnableBackHandler ? (
+            <View style={styles.ImgHeaderBarContainerWithBack}>
+              <TouchableOpacity
+                onPress={() => {
+                  BackHandler();
+                }}>
+                <GradientIcon name="left" color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  ToggleFavourite(favourite, type, id);
+                }}>
+                <GradientIcon
+                  name="like"
+                  color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
+                  size={FONTSIZE.size_16}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.ImgHeaderBarContainerWithoutBack}>
+              <TouchableOpacity
+                onPress={() => {
+                  ToggleFavourite(favourite, type, id);
+                }}>
+                <GradientIcon
+                  name="like"
+                  color={favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex}
+                  size={FONTSIZE.size_16}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+
+          <View style={styles.ImgInfoOuterContainer}>
+            <View style={styles.ImgInfoInnerContainer}>
+              <View style={styles.InfoContainerRow}>
+                <View>
+                  <Text style={styles.ItemTitleText}>{name}</Text>
+                  <Text style={styles.ItemSubtitleText}>{special_ingredient}</Text>
+                </View>
+                <View style={styles.ItemPropertiesContainer}>
+                  <View style={styles.PropFirst}>
+                    <CustomIconConfig
+                      name={type == 'Bean' ? 'bean' : 'beans'}
+                      size={type == 'Bean' ? FONTSIZE.size_18 : FONTSIZE.size_24}
+                      color={COLORS.primaryOrangeHex}
+                    />
+                    <Text
+                      style={[
+                        styles.PropTextFirst,
+                        {
+                          marginTop: type == 'Bean' ? SPACING.space_4 + SPACING.space_2 : 0,
+                        },
+                      ]}>
+                      {type}
+                    </Text>
+                  </View>
+                  <View style={styles.PropFirst}>
+                    <CustomIconConfig
+                      name={type == 'Bean' ? 'location' : 'drop'}
+                      size={FONTSIZE.size_16}
+                      color={COLORS.primaryOrangeHex}
+                    />
+                    <Text style={styles.PropTextLast}>{ingredients}</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.InfoContainerRow}>
+                <View style={styles.RatingContainer}>
+                  <CustomIconConfig name={'star'} color={COLORS.primaryOrangeHex} size={FONTSIZE.size_20} />
+                  <Text style={styles.RatingText}>{average_rating}</Text>
+                  <Text style={styles.RatingCountText}>({ratings_count})</Text>
+                </View>
+                <View style={styles.RoastedContainer}>
+                  <Text style={styles.RoastedText}>{roasted}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
+      )}
     </View>
   );
 };

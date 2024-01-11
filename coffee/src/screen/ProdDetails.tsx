@@ -5,18 +5,19 @@ import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/them
 import {useStore} from '../store/store';
 import ImageBGInfo from '../component/ImageBGInfo';
 import PaymentFooter from '../component/PaymentFooter';
+import BeansData from '../data/BeansData';
 
 const ProdDetails = ({navigation, route}: {navigation: any; route: any}) => {
-  const ItemOfIndex = useStore((state: any) =>
-    route?.params?.type === 'Coffee' ? state?.coffeeList : state?.beansList,
-  )[route?.params?.index];
+  const ItemOfIndex = useStore((state: any) => (route?.params?.type === 'Coffee' ? state?.coffeeList : BeansData))[
+    route?.params?.index
+  ];
 
   const addToFavList = useStore((state: any) => state?.addToFavList);
   const deleteFromFavList = useStore((state: any) => state?.deleteFromFavList);
   const addToCart = useStore((state: any) => state?.addToCart);
   const calcCartPrice = useStore((state: any) => state?.calcCartPrice);
 
-  const [price, setPrice] = useState(ItemOfIndex.prices[0]);
+  const [price, setPrice] = useState(ItemOfIndex?.prices[0]);
   const [fullDesc, setFullDesc] = useState(false);
 
   const ToggleFavourite = (favourite: boolean, type: string, id: string) => {
@@ -71,7 +72,7 @@ const ProdDetails = ({navigation, route}: {navigation: any; route: any}) => {
               onPress={() => {
                 setFullDesc(prev => !prev);
               }}>
-              <Text style={styles.DescText}>{ItemOfIndex.description}</Text>
+              <Text style={styles.DescText}>{ItemOfIndex?.description}</Text>
             </TouchableWithoutFeedback>
           ) : (
             <TouchableWithoutFeedback
@@ -79,13 +80,13 @@ const ProdDetails = ({navigation, route}: {navigation: any; route: any}) => {
                 setFullDesc(prev => !prev);
               }}>
               <Text numberOfLines={3} style={styles.DescText}>
-                {ItemOfIndex.description}
+                {ItemOfIndex?.description}
               </Text>
             </TouchableWithoutFeedback>
           )}
           <Text style={styles.InfoTitle}>Size</Text>
           <View style={styles.SizeOuterContent}>
-            {ItemOfIndex.prices.map((data: any) => (
+            {ItemOfIndex?.prices.map((data: any) => (
               <TouchableOpacity
                 key={data.size}
                 onPress={() => {
@@ -94,18 +95,18 @@ const ProdDetails = ({navigation, route}: {navigation: any; route: any}) => {
                 style={[
                   styles.SizeBox,
                   {
-                    borderColor: data.size === price.size ? COLORS.primaryOrangeHex : COLORS.primaryDarkGreyHex,
+                    borderColor: data?.size === price?.size ? COLORS.primaryOrangeHex : COLORS.primaryDarkGreyHex,
                   },
                 ]}>
                 <Text
                   style={[
                     styles.SizeText,
                     {
-                      fontSize: ItemOfIndex.type === 'Bean' ? FONTSIZE.size_14 : FONTSIZE.size_16,
-                      color: data.size === price.size ? COLORS.primaryOrangeHex : COLORS.secondaryLightGreyHex,
+                      fontSize: ItemOfIndex?.type === 'Bean' ? FONTSIZE.size_14 : FONTSIZE.size_16,
+                      color: data?.size === price?.size ? COLORS.primaryOrangeHex : COLORS.secondaryLightGreyHex,
                     },
                   ]}>
-                  {data.size}
+                  {data?.size}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -116,12 +117,12 @@ const ProdDetails = ({navigation, route}: {navigation: any; route: any}) => {
           buttonTitle="Add to Cart"
           buttonPressHandler={() => {
             addToCarthandler({
-              id: ItemOfIndex.id,
-              index: ItemOfIndex.index,
-              name: ItemOfIndex.name,
-              roasted: ItemOfIndex.roasted,
-              imagelink_square: ItemOfIndex.imagelink_square,
-              special_ingredient: ItemOfIndex.special_ingredient,
+              id: ItemOfIndex?.id,
+              index: ItemOfIndex?.index,
+              name: ItemOfIndex?.name,
+              roasted: ItemOfIndex?.roasted,
+              imagelink_square: ItemOfIndex?.imagelink_square,
+              special_ingredient: ItemOfIndex?.special_ingredient,
               type: ItemOfIndex.type,
               price: price,
             });
